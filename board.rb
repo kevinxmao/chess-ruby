@@ -32,7 +32,7 @@ class Board
     back_row = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
     row_idx = color == :black ? 0 : 7
 
-    back_row.each_wtih_index do |piece, i|
+    back_row.each.with_index do |piece, i|
       self[[row_idx, i]] = piece.new([row_idx, i], color, self)
     end
 
@@ -44,8 +44,6 @@ class Board
     (0..7).each do |i|
       self[[row_idx, i]] = Pawn.new([row_idx, i], color, self)
     end
-  end
-    
   end
 
   def populate
