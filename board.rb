@@ -4,7 +4,7 @@ require_relative 'piece'
 class Board
 
   def initialize
-    
+    @null = NullPiece.instance
     populate
   end
 
@@ -18,15 +18,20 @@ class Board
     @rows[col][row] = val
   end
 
-  def move_piece(start_pos, end_pos)
-    raise ArgumentError.new "Invalid Move" if self[start_pos].color == :null
-    raise ArgumentError.new "Invalid Move" if self[end_pos].color != :null
+  def move_piece(color, start_pos, end_pos)
+    # raise ArgumentError.new "Invalid Move" if self[start_pos].color == :null
     # raise ArgumentError.new "Invalid Move" if self[end_pos].color != :null
+
   end
 
   def valid_pos?(pos)
     pos.all? { |coord| coord.between?(0,7) }
   end
+
+
+  private
+
+  attr_reader :null
 
   def fill_back_row(color)
     back_row = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
@@ -47,7 +52,7 @@ class Board
   end
 
   def populate
-    @rows = Array.new(8) { Array.new(8, NullPiece.instance) }
+    @rows = Array.new(8) { Array.new(8, null) }
 
     [:black, :white].each do |color|
       fill_back_row(color)
