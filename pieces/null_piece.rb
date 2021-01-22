@@ -14,6 +14,10 @@ class NullPiece < Piece
     true
   end
 
+  def symbol
+    @symbol
+  end
+
   # def moves
   #   []
   # end
