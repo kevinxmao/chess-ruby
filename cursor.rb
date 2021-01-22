@@ -1,5 +1,6 @@
 require "io/console"
 
+# translate keypresses into actions and movements
 KEYMAP = {
   " " => :space,
   "h" => :left,
@@ -23,6 +24,7 @@ KEYMAP = {
   "\u0003" => :ctrl_c,
 }
 
+# possible movement differentials
 MOVES = {
   left: [0, -1],
   right: [0, 1],
@@ -76,8 +78,20 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+    when :return, :space
+        return cursor_pos
+    when :left, :right, :up, :down
+        update_pos(MOVES[key])
+    when :ctrl_c
+        Process.exit(0)
+    end
   end
 
   def update_pos(diff)
+    cur_i, cur_j = cursor_pos
+    new_pos = [cur_i + diff[0], cur_j + diff[1]]
+
+    cursor_pos = new_pos if board.valid_pos?(new_pos)
   end
 end
