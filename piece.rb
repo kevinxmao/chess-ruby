@@ -19,7 +19,7 @@ class Piece
     false
   end
 
-  def valid_move?
+  def valid_moves
     moves.select { |move| !move_into_check?(move) }
   end
 
